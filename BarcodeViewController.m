@@ -1,10 +1,4 @@
-//
-//  igViewController.m
-//  ScanBarCodes
-//
-//  Created by Torrey Betts on 10/10/13.
-//  Copyright (c) 2013 Infragistics. All rights reserved.
-//
+
 
 #import <AVFoundation/AVFoundation.h>
 #import "BarcodeViewController.h"
@@ -16,7 +10,7 @@
     AVCaptureDeviceInput *input;
     AVCaptureMetadataOutput *output;
     AVCaptureVideoPreviewLayer *prevLayer;
-    AVSpeechSynthesizer *speechSyn; // speech
+    AVSpeechSynthesizer *sintetitzadorDeVeu; // SINTETIZADOR DE VEU
 
     UIView *highlightView;
     UILabel *codeLabel;
@@ -155,6 +149,7 @@
         case  978 ... 979:	return @"Bookland (ISBN)"; break;
         case  980:	return @"Refund receipts"; break;
         case  981 ... 984:	return @" coupon identification for common currency areas"; break;
+            
         
     }
     return @"error";
@@ -165,7 +160,9 @@
     [super viewDidLoad];
     
     
-    speechSyn = [[AVSpeechSynthesizer alloc]init]; // speech
+    
+    
+    sintetitzadorDeVeu = [[AVSpeechSynthesizer alloc]init]; // speech
     highlightView = [[UIView alloc] init];
     highlightView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
     highlightView.layer.borderColor = [UIColor greenColor].CGColor;
@@ -192,11 +189,11 @@
     alertLabel.textColor = [UIColor whiteColor];
     alertLabel.font = [UIFont boldSystemFontOfSize:24.0f];
     alertLabel.textAlignment = NSTextAlignmentCenter;
-    alertLabel.text = @"TAP anywhere to scan again";
+    alertLabel.text = @"Toc per escanejar de nou";
 
     countryLabel.textColor = [UIColor whiteColor];
     countryLabel.textAlignment = NSTextAlignmentCenter;
-    countryLabel.text = @"(unknow)";
+    countryLabel.text = @"(desconegut)";
     
     
     [self.view addSubview:codeLabel];
@@ -238,8 +235,8 @@
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateRecognized) {
         alertLabel.hidden = true;
-        countryLabel.text = @"(unknow)";
-        codeLabel.text = @"(none)";
+        countryLabel.text = @"(desconegut)";
+        codeLabel.text = @"(cap)";
         [session startRunning];
     }
 }
@@ -250,11 +247,11 @@
     AVMetadataMachineReadableCodeObject *barCodeObject;
     NSString *detectionString = nil;
     NSString *countryValue = nil;
-    /*
+/*
     NSArray *barCodeTypes = @[AVMetadataObjectTypeUPCECode, AVMetadataObjectTypeCode39Code, AVMetadataObjectTypeCode39Mod43Code,
             AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode93Code, AVMetadataObjectTypeCode128Code,
             AVMetadataObjectTypePDF417Code, AVMetadataObjectTypeQRCode, AVMetadataObjectTypeAztecCode];
-     */
+   */
      
     NSArray *barCodeTypes = @[AVMetadataObjectTypeEAN13Code];
 
@@ -288,7 +285,7 @@
             AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString: countryValue];
             [utterance setRate:AVSpeechUtteranceMinimumSpeechRate];
             //[speechSyn pauseSpeakingAtBoundary:AVSpeechBoundaryWord];
-            [speechSyn speakUtterance:utterance];
+            [sintetitzadorDeVeu speakUtterance:utterance];
             
             
             codeLabel.text = detectionString;
