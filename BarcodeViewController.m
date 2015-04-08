@@ -165,7 +165,7 @@
     sintetitzadorDeVeu = [[AVSpeechSynthesizer alloc]init]; // speech
     highlightView = [[UIView alloc] init];
     highlightView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleBottomMargin;
-    highlightView.layer.borderColor = [UIColor greenColor].CGColor;
+    highlightView.layer.borderColor = [UIColor blueColor].CGColor;
     highlightView.layer.borderWidth = 3;
     [self.view addSubview:highlightView];
 
@@ -175,7 +175,8 @@
     codeLabel.backgroundColor = [UIColor colorWithWhite:0.15 alpha:0.65];
     codeLabel.textColor = [UIColor whiteColor];
     codeLabel.textAlignment = NSTextAlignmentCenter;
-    codeLabel.text = @"(none)";
+    //codeLabel.text = @"(none)";
+    codeLabel.text = NSLocalizedString(@"none", nil);
     
     countryLabel = [[UILabel alloc] init];
     countryLabel.frame = CGRectMake(0, self.view.bounds.size.height - 80, self.view.bounds.size.width , 40);
@@ -189,11 +190,13 @@
     alertLabel.textColor = [UIColor whiteColor];
     alertLabel.font = [UIFont boldSystemFontOfSize:24.0f];
     alertLabel.textAlignment = NSTextAlignmentCenter;
-    alertLabel.text = @"Toc per escanejar de nou";
+    //alertLabel.text = @"Toc per escanejar de nou";
+    alertLabel.text = NSLocalizedString(@"Tap to scan again",nil);
 
     countryLabel.textColor = [UIColor whiteColor];
     countryLabel.textAlignment = NSTextAlignmentCenter;
-    countryLabel.text = @"(desconegut)";
+    //countryLabel.text = @"(desconegut)";
+    countryLabel.text = NSLocalizedString(@"unknown", nil);
     
     
     [self.view addSubview:codeLabel];
@@ -235,8 +238,10 @@
 - (void)handleTapGesture:(UITapGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateRecognized) {
         alertLabel.hidden = true;
-        countryLabel.text = @"(desconegut)";
-        codeLabel.text = @"(cap)";
+        //countryLabel.text = @"(desconegut)";
+        countryLabel.text = NSLocalizedString(@"unknown", nil);
+        //codeLabel.text = @"(cap)";
+        codeLabel.text = NSLocalizedString(@"none", nil);
         [session startRunning];
     }
 }
@@ -292,8 +297,10 @@
             countryLabel.text = countryValue;
             break;
         }
-        else
-            codeLabel.text = @"(none)";
+        else {
+            //codeLabel.text = @"(none)";
+            codeLabel.text = NSLocalizedString(@"none", nil);
+        }
     }
 
     highlightView.frame = highlightViewRect;
